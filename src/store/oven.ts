@@ -1,14 +1,13 @@
 import type { AppMiddleware } from "./store";
 import { createSlice } from "@reduxjs/toolkit";
-import { timeAdvance, timeSlice } from "./time";
+import { timeAdvance } from "./time";
+import { bakeBiscuits, selectBiscuitsAtPosition } from "./biscuits";
 
-// Define a type for the slice state
 interface OvenState {
   temperature: number;
   isHeaterOn: boolean;
 }
 
-// Define the initial state using that type
 const initialState: OvenState = {
   temperature: 200,
   isHeaterOn: false,
@@ -35,7 +34,7 @@ export const ovenSlice = createSlice({
 const LOW_TEMP = 220;
 const HIGH_TEMP = 236;
 
-export const overThermostatMiddleware: AppMiddleware =
+export const ovenThermostatMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
     if (action.type === timeAdvance.type) {
       const { isHeaterOn, temperature } = storeApi.getState().oven;
@@ -51,6 +50,22 @@ export const overThermostatMiddleware: AppMiddleware =
         );
         storeApi.dispatch(ovenSlice.actions.turnOff());
       }
+    }
+
+    return next(action);
+  };
+
+const FROM = 100;
+const TO = 200;
+const BAKE_SPEED = 1;
+
+const selectBiscuitsInsideOven = selectBiscuitsAtPosition(FROM, TO);
+export const ovenBakeMiddleware: AppMiddleware =
+  (storeApi) => (next) => (action) => {
+    if (action.type === timeAdvance.type) {
+      const biscuits = selectBiscuitsInsideOven(storeApi.getState());
+      console.log(`[Oven] Baking ${biscuits.length} biscuits`);
+      storeApi.dispatch(bakeBiscuits({ biscuits, heat: BAKE_SPEED }));
     }
 
     return next(action);

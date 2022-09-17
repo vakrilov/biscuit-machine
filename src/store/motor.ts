@@ -2,12 +2,10 @@ import type { AppMiddleware, RootState } from "./store";
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import { timeAdvance, timeSlice } from "./time";
 
-// Define a type for the slice state
 interface MotorState {
   isOn: boolean;
 }
 
-// Define the initial state using that type
 const initialState: MotorState = {
   isOn: true,
 };
@@ -26,7 +24,7 @@ export const motorSlice = createSlice({
 });
 
 const PULSE_EVERY = 10;
-export const pulse = createAction("motor/pulse");
+export const pulseAction = createAction("motor/pulse");
 
 export const { turnMotorOff, turnMotorOn } = motorSlice.actions;
 
@@ -42,7 +40,7 @@ export const motorPulseMiddleware: AppMiddleware = (storeApi) => (next) => {
 
       if (timeSinceLastPulse >= PULSE_EVERY) {
         console.log("[Motor] Pulse!")
-        storeApi.dispatch(pulse());
+        storeApi.dispatch(pulseAction());
         timeSinceLastPulse = 0;
       }
     }

@@ -7,6 +7,7 @@ function App() {
   const ovenT = useAppSelector((s) => s.oven.temperature);
   const ovenState = useAppSelector((s) => s.oven.isHeaterOn);
   const isMotorOn = useAppSelector(selectIsMotorOn);
+  const biscuits = useAppSelector((s) => s.biscuits.biscuits);
   const dispatch = useAppDispatch();
 
   return (
@@ -30,6 +31,12 @@ function App() {
         Heater: {ovenState ? "ON" : "OFF"}
         <br />
         Temperature: {ovenT}
+      </div>
+      <div className="card">
+        <h3>Biscuits</h3>
+        {biscuits.map((b) => (
+          <div key={b.id}>{JSON.stringify(b)}</div>
+        ))}
       </div>
     </div>
   );

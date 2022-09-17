@@ -1,21 +1,11 @@
 import type { AppMiddleware } from "./store";
 import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface TimeState {
-  speed: number;
-}
-
-const initialState: TimeState = {
-  speed: 1,
-};
-
 export const timeSlice = createSlice({
-  name: "time",
-  initialState,
+  name: "timeSpeed",
+  initialState: 1,
   reducers: {
-    setSpeed: (state, action: PayloadAction<number>) => {
-      state.speed = action.payload;
-    },
+    setSpeed: (state, action: PayloadAction<number>) => action.payload,
   },
 });
 
@@ -29,7 +19,7 @@ export const timeMiddleware: AppMiddleware = (storeApi) => (next) => {
     const result = next(action);
     if (action.type === timeSlice.actions.setSpeed.type) {
       clearInterval(timer);
-      const speed = storeApi.getState().time.speed;
+      const speed = storeApi.getState().timeSpeed;
       if (speed > 0) {
         console.log("Starting timer");
         timer = setInterval(() => {

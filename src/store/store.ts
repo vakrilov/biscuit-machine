@@ -13,7 +13,7 @@ import { switchSlice } from "./switch";
 import { timeSlice, timeMiddleware } from "./time";
 
 const reducer = {
-  time: timeSlice.reducer,
+  timeSpeed: timeSlice.reducer,
   switch: switchSlice.reducer,
   oven: ovenSlice.reducer,
   biscuits: biscuitsSlice.reducer,

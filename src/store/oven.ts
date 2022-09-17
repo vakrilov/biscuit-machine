@@ -4,6 +4,7 @@ import { timeAdvance } from "./time";
 import { bakeBiscuits, selectBiscuitsAtPosition } from "./biscuits";
 import { selectSwitch } from "./switch";
 
+const ROOM_TEMP = 30;
 const LOW_TEMP = 220;
 const HIGH_TEMP = 240;
 const HEAT_UP_STEP = 5;
@@ -11,15 +12,15 @@ const HEAT_DOWN_STEP = 1;
 
 const BAKE_SPEED = 1;
 
-interface OvenState {
+type OvenState = {
   temperature: number;
   isHeaterOn: boolean;
   fromPosition: number;
   toPosition: number;
-}
+};
 
 const initialState: OvenState = {
-  temperature: 200,
+  temperature: ROOM_TEMP,
   isHeaterOn: false,
   fromPosition: 100,
   toPosition: 200,
@@ -39,6 +40,7 @@ export const ovenSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(timeAdvance, (state) => {
       state.temperature += state.isHeaterOn ? HEAT_UP_STEP : -HEAT_DOWN_STEP;
+      state.temperature = Math.max(ROOM_TEMP, state.temperature);
     });
   },
 });

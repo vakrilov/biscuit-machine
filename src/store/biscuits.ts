@@ -1,20 +1,14 @@
-import type { AppMiddleware, RootState } from "./store";
+import type { RootState } from "./store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Biscuit {
+export type Biscuit = {
   id: number;
   state: "created" | "stamped";
   cooked: number;
   position: number;
-}
-
-interface BiscuitsState {
-  biscuits: Biscuit[];
-}
-
-const initialState: BiscuitsState = {
-  biscuits: [],
 };
+
+const initialState: Biscuit[] = [];
 
 let idCount = 0;
 export const createBiscuit = (position: number = 0): Biscuit => ({
@@ -29,11 +23,11 @@ export const biscuitsSlice = createSlice({
   initialState,
   reducers: {
     addBiscuit: (state, action: PayloadAction<Biscuit>) => {
-      state.biscuits.push(action.payload);
+      state.push(action.payload);
     },
     stampBiscuits: (state, action: PayloadAction<Biscuit[]>) => {
       const idsToFilter = action.payload.map((b) => b.id);
-      const toStamp = state.biscuits.filter((b) => idsToFilter.includes(b.id));
+      const toStamp = state.filter((b) => idsToFilter.includes(b.id));
       toStamp.forEach((b) => (b.state = "stamped"));
     },
     moveBiscuits: (
@@ -41,7 +35,7 @@ export const biscuitsSlice = createSlice({
       action: PayloadAction<{ biscuits: Biscuit[]; speed: number }>
     ) => {
       const idsToFilter = action.payload.biscuits.map((b) => b.id);
-      const toMove = state.biscuits.filter((b) => idsToFilter.includes(b.id));
+      const toMove = state.filter((b) => idsToFilter.includes(b.id));
       toMove.forEach((b) => (b.position += action.payload.speed));
     },
 
@@ -50,7 +44,7 @@ export const biscuitsSlice = createSlice({
       action: PayloadAction<{ biscuits: Biscuit[]; heat: number }>
     ) => {
       const idsToFilter = action.payload.biscuits.map((b) => b.id);
-      const toBake = state.biscuits.filter((b) => idsToFilter.includes(b.id));
+      const toBake = state.filter((b) => idsToFilter.includes(b.id));
       toBake.forEach((b) => (b.cooked += action.payload.heat));
     },
   },
@@ -61,6 +55,6 @@ export const { addBiscuit, stampBiscuits, moveBiscuits, bakeBiscuits } =
 
 export const selectBiscuitsAtPosition =
   (from: number, to: number) => (state: RootState) =>
-    state.biscuits.biscuits.filter(
+    state.biscuits.filter(
       (b) => from <= b.position && b.position < to
     );

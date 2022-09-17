@@ -1,13 +1,16 @@
 import "./App.css";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setSpeed } from "./store/time";
-import { selectIsMotorOn, turnMotorOff, turnMotorOn } from "./store/motor";
+import { selectIsMotorOn } from "./store/motor";
+import { setSwitch } from "./store/switch";
+import { selectIsConveyorMoving } from "./store/conveyor";
 
 function App() {
   const ovenT = useAppSelector((s) => s.oven.temperature);
   const ovenState = useAppSelector((s) => s.oven.isHeaterOn);
   const isMotorOn = useAppSelector(selectIsMotorOn);
-  const biscuits = useAppSelector((s) => s.biscuits.biscuits);
+  const { moving: isConveyorMoving } = useAppSelector(selectIsConveyorMoving);
+  const biscuits = useAppSelector((s) => s.biscuits);
   const dispatch = useAppDispatch();
 
   return (
@@ -20,11 +23,14 @@ function App() {
         <button onClick={() => dispatch(setSpeed(10))}>10</button>
       </div>
       <div className="card">
-        <h3>Motor</h3>
-        <button onClick={() => dispatch(turnMotorOn())}>on</button>
-        <button onClick={() => dispatch(turnMotorOff())}>off</button>
+        <h3>Switch</h3>
+        <button onClick={() => dispatch(setSwitch("on"))}>on</button>
+        <button onClick={() => dispatch(setSwitch("off"))}>off</button>
+        <button onClick={() => dispatch(setSwitch("pause"))}>pause</button>
         <br />
-        {isMotorOn ? "ON" : "OFF"}
+        Motor: {isMotorOn ? "ON" : "OFF"}
+        <br />
+        Conveyor: {isConveyorMoving ? "ON" : "OFF"}
       </div>
       <div className="card">
         <h3>Oven</h3>

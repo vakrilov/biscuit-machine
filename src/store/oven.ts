@@ -5,13 +5,13 @@ import { timeAdvance, timeSlice } from "./time";
 // Define a type for the slice state
 interface OvenState {
   temperature: number;
-  isOn: boolean;
+  isHeaterOn: boolean;
 }
 
 // Define the initial state using that type
 const initialState: OvenState = {
   temperature: 200,
-  isOn: false,
+  isHeaterOn: false,
 };
 
 export const ovenSlice = createSlice({
@@ -19,15 +19,15 @@ export const ovenSlice = createSlice({
   initialState,
   reducers: {
     turnOn: (state) => {
-      state.isOn = true;
+      state.isHeaterOn = true;
     },
     turnOff: (state) => {
-      state.isOn = false;
+      state.isHeaterOn = false;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(timeAdvance, (state) => {
-      state.temperature += state.isOn ? 5 : -1;
+      state.temperature += state.isHeaterOn ? 5 : -1;
     });
   },
 });
@@ -38,13 +38,17 @@ const HIGH_TEMP = 236;
 export const overThermostatMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
     if (action.type === timeAdvance.type) {
-      const currentTemp = storeApi.getState().oven.temperature;
+      const { isHeaterOn, temperature } = storeApi.getState().oven;
 
-      if (currentTemp <= LOW_TEMP) {
-        console.log(`Oven temperature is low: ${currentTemp}C. Turning ove ON!`)
+      if (!isHeaterOn && temperature <= LOW_TEMP) {
+        console.log(
+          `[Oven] Temperature is low: ${temperature}C. Turning heater ON!`
+        );
         storeApi.dispatch(ovenSlice.actions.turnOn());
-      } else if (currentTemp >= HIGH_TEMP) {
-        console.log(`Oven temperature is high: ${currentTemp}C. Turning ove OFF!`)
+      } else if (isHeaterOn && temperature >= HIGH_TEMP) {
+        console.log(
+          `[Oven] Temperature is high: ${temperature}C. Turning heater OFF!`
+        );
         storeApi.dispatch(ovenSlice.actions.turnOff());
       }
     }

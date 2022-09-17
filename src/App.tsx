@@ -1,12 +1,12 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setSpeed } from "./store/time";
+import { selectIsMotorOn, turnMotorOff, turnMotorOn } from "./store/motor";
 
 function App() {
   const ovenT = useAppSelector((s) => s.oven.temperature);
-  const ovenState = useAppSelector((s) => s.oven.isOn);
+  const ovenState = useAppSelector((s) => s.oven.isHeaterOn);
+  const isMotorOn = useAppSelector(selectIsMotorOn);
   const dispatch = useAppDispatch();
 
   return (
@@ -19,7 +19,17 @@ function App() {
         <button onClick={() => dispatch(setSpeed(10))}>10</button>
       </div>
       <div className="card">
-        OVEN({ovenState ? "ON" : "OFF"}): {ovenT}
+        <h3>Motor</h3>
+        <button onClick={() => dispatch(turnMotorOn())}>on</button>
+        <button onClick={() => dispatch(turnMotorOff())}>off</button>
+        <br />
+        {isMotorOn ? "ON" : "OFF"}
+      </div>
+      <div className="card">
+        <h3>Oven</h3>
+        Heater: {ovenState ? "ON" : "OFF"}
+        <br />
+        Temperature: {ovenT}
       </div>
     </div>
   );

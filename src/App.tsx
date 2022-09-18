@@ -17,10 +17,10 @@ function App() {
     <div className="App">
       <div className="card">
         <button onClick={() => dispatch(setSpeed(0))}>stop</button>
-        <button onClick={() => dispatch(setSpeed(1))}>1</button>
-        <button onClick={() => dispatch(setSpeed(2))}>2</button>
-        <button onClick={() => dispatch(setSpeed(3))}>3</button>
-        <button onClick={() => dispatch(setSpeed(10))}>10</button>
+        <button onClick={() => dispatch(setSpeed(0.1))}>x1/10</button>
+        <button onClick={() => dispatch(setSpeed(1))}>x1</button>
+        <button onClick={() => dispatch(setSpeed(3))}>x3</button>
+        <button onClick={() => dispatch(setSpeed(10))}>x10</button>
       </div>
       <div className="card">
         <h3>Switch</h3>

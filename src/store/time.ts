@@ -12,7 +12,7 @@ export const timeSlice = createSlice({
 export const { setSpeed } = timeSlice.actions;
 export const timeAdvance = createAction("time/advance");
 
-const TIME_INTERVAL = 1000;
+const TIME_INTERVAL = 100;
 export const timeMiddleware: AppMiddleware = (storeApi) => (next) => {
   let timer: number | undefined = undefined;
   return (action) => {

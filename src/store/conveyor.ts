@@ -1,6 +1,11 @@
 import { AppMiddleware, RootState } from "./store";
 import { timeAdvance } from "./time";
-import { Biscuit, moveBiscuits, selectBiscuitsAtPosition } from "./biscuits";
+import {
+  Biscuit,
+  moveBiscuits,
+  selectBiscuitsAtPosition,
+  putBiscuitInJar,
+} from "./biscuits";
 import { selectSwitch, SwitchState } from "./switch";
 import { selectIsOvenReady } from "./oven";
 
@@ -8,13 +13,14 @@ const FROM = 0;
 const TO = 220;
 const SPEED = 1;
 
-const selectBiscuits = selectBiscuitsAtPosition(FROM, TO);
+const selectBiscuitsToMove = selectBiscuitsAtPosition(FROM, TO);
+const selectBiscuitsToJar = selectBiscuitsAtPosition(TO, Infinity);
 
 export const selectIsConveyorMoving = (
   state: RootState
 ): { moving: boolean; toMove: Biscuit[] } => {
   const switchState = selectSwitch(state);
-  const toMove = selectBiscuits(state);
+  const toMove = selectBiscuitsToMove(state);
 
   switch (switchState) {
     case "off":
@@ -36,6 +42,11 @@ export const conveyorMiddleware: AppMiddleware =
       if (moving) {
         console.log(`[Conveyor] Move! Biscuits to move: ${toMove.length}`);
         storeApi.dispatch(moveBiscuits({ biscuits: toMove, speed: SPEED }));
+      }
+
+      const toJar = selectBiscuitsToJar(storeApi.getState());
+      if (toJar.length) {
+        storeApi.dispatch(putBiscuitInJar(toJar));
       }
     }
 

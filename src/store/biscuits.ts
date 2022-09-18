@@ -6,6 +6,7 @@ export type Biscuit = {
   state: "created" | "stamped";
   cooked: number;
   position: number;
+  location: "conveyor" | "jar";
 };
 
 const initialState: Biscuit[] = [];
@@ -14,10 +15,15 @@ let idCount = 0;
 export const createBiscuit = (position: number = 0): Biscuit => ({
   id: idCount++,
   state: "created",
+  location: "conveyor",
   cooked: 0,
   position,
 });
 
+const selectBiscuits = (toSelect: Biscuit[], state: Biscuit[]) => {
+  const idsToFilter = toSelect.map((b) => b.id);
+  return state.filter((b) => idsToFilter.includes(b.id));
+};
 export const biscuitsSlice = createSlice({
   name: "biscuits",
   initialState,
@@ -25,17 +31,17 @@ export const biscuitsSlice = createSlice({
     addBiscuit: (state, action: PayloadAction<Biscuit>) => {
       state.push(action.payload);
     },
+
     stampBiscuits: (state, action: PayloadAction<Biscuit[]>) => {
-      const idsToFilter = action.payload.map((b) => b.id);
-      const toStamp = state.filter((b) => idsToFilter.includes(b.id));
+      const toStamp = selectBiscuits(action.payload, state);
       toStamp.forEach((b) => (b.state = "stamped"));
     },
+
     moveBiscuits: (
       state,
       action: PayloadAction<{ biscuits: Biscuit[]; speed: number }>
     ) => {
-      const idsToFilter = action.payload.biscuits.map((b) => b.id);
-      const toMove = state.filter((b) => idsToFilter.includes(b.id));
+      const toMove = selectBiscuits(action.payload.biscuits, state);
       toMove.forEach((b) => (b.position += action.payload.speed));
     },
 
@@ -43,18 +49,25 @@ export const biscuitsSlice = createSlice({
       state,
       action: PayloadAction<{ biscuits: Biscuit[]; heat: number }>
     ) => {
-      const idsToFilter = action.payload.biscuits.map((b) => b.id);
-      const toBake = state.filter((b) => idsToFilter.includes(b.id));
+      const toBake = selectBiscuits(action.payload.biscuits, state);
       toBake.forEach((b) => (b.cooked += action.payload.heat));
+    },
+
+    putBiscuitInJar: (state, action: PayloadAction<Biscuit[]>) => {
+      const toJar = selectBiscuits(action.payload, state);
+      toJar.forEach((b) => (b.location = "jar"));
     },
   },
 });
 
-export const { addBiscuit, stampBiscuits, moveBiscuits, bakeBiscuits } =
-  biscuitsSlice.actions;
+export const {
+  addBiscuit,
+  stampBiscuits,
+  moveBiscuits,
+  bakeBiscuits,
+  putBiscuitInJar,
+} = biscuitsSlice.actions;
 
 export const selectBiscuitsAtPosition =
   (from: number, to: number) => (state: RootState) =>
-    state.biscuits.filter(
-      (b) => from <= b.position && b.position < to
-    );
+    state.biscuits.filter((b) => from <= b.position && b.position < to);

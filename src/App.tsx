@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import "./App.css";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setSpeed } from "./store/time";
 import { selectIsMotorOn } from "./store/motor";
@@ -12,16 +11,9 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from "@mui/material";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { Analytics } from "./Analytics";
+
+import "./App.css";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -33,8 +25,6 @@ function App() {
 
   const { moving: isConveyorMoving } = useAppSelector(selectIsConveyorMoving);
   const biscuits = useAppSelector((s) => s.biscuits);
-
-  const data = useAppSelector((s) => s.analytics.data);
 
   const handleSwitch = useCallback(
     (_: React.MouseEvent<HTMLElement>, value: SwitchState | null) => {
@@ -62,7 +52,7 @@ function App() {
         </Typography>
       </Grid>
 
-      <Grid item xs={4}>
+      <Grid item xs={8}>
         <Paper elevation={3} style={{ padding: "1rem" }}>
           <Typography variant="h5">Switch</Typography>
           <ToggleButtonGroup
@@ -86,6 +76,10 @@ function App() {
         </Paper>
       </Grid>
       <Grid item xs={4}>
+        <Analytics />
+      </Grid>
+
+      <Grid item xs={4}>
         <Paper elevation={3} style={{ padding: "1rem" }}>
           <Typography variant="body1">
             Motor: {isMotorOn ? "ON" : "OFF"}
@@ -97,29 +91,6 @@ function App() {
             Oven Temperature: {oven.temperature}
           </Typography>
         </Paper>
-      </Grid>
-      <Grid item xs={4}>
-        <Paper elevation={3} style={{ padding: "1rem" }}>
-          <Typography variant="h5">biscuits</Typography>
-
-          <Typography variant="body1">
-            COUNT: {biscuits.length}
-            {/* {biscuits.map((b) => (
-              <div key={b.id}>{JSON.stringify(b)}</div>
-            ))} */}
-          </Typography>
-        </Paper>
-      </Grid>
-
-      <Grid item xs={12}>
-        <LineChart width={500} height={300} data={data}>
-          <XAxis />
-          <YAxis type="number" domain={[0, 250]} />
-          <CartesianGrid stroke="#eee" />
-          <Line dataKey="temperature" stroke="red" dot={false} />
-          <Line dataKey="conveyor" stroke="blue" dot={false} />
-          <Line dataKey="jar" stroke="green" dot={false} />
-        </LineChart>
       </Grid>
     </Grid>
   );

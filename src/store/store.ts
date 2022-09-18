@@ -1,4 +1,5 @@
 import { configureStore, Middleware } from "@reduxjs/toolkit";
+import { analyticsMiddleware, analyticsSlice } from "./analytics";
 import { biscuitsSlice } from "./biscuits";
 import { conveyorMiddleware } from "./conveyor";
 import { extruderMiddleware } from "./extruder";
@@ -17,6 +18,7 @@ const reducer = {
   switch: switchSlice.reducer,
   oven: ovenSlice.reducer,
   biscuits: biscuitsSlice.reducer,
+  analytics: analyticsSlice.reducer,
 };
 
 const middlewares: Middleware[] = [
@@ -27,6 +29,7 @@ const middlewares: Middleware[] = [
   motorPulseMiddleware,
   extruderMiddleware,
   stamperMiddleware,
+  analyticsMiddleware,
 ];
 
 export const store = configureStore({

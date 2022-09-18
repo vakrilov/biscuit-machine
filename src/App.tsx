@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import "./App.css";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setSpeed } from "./store/time";
@@ -11,17 +12,29 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from "@mui/material";
-import { useCallback } from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 function App() {
-  const ovenT = useAppSelector((s) => s.oven.temperature);
-  const ovenState = useAppSelector((s) => s.oven.isHeaterOn);
+  const dispatch = useAppDispatch();
+
+  const oven = useAppSelector((s) => s.oven);
   const isMotorOn = useAppSelector(selectIsMotorOn);
   const switchValue = useAppSelector(selectSwitch);
   const timeSpeed = useAppSelector((s) => s.timeSpeed);
+
   const { moving: isConveyorMoving } = useAppSelector(selectIsConveyorMoving);
   const biscuits = useAppSelector((s) => s.biscuits);
-  const dispatch = useAppDispatch();
+
+  const data = useAppSelector((s) => s.analytics.data);
 
   const handleSwitch = useCallback(
     (_: React.MouseEvent<HTMLElement>, value: SwitchState | null) => {
@@ -79,9 +92,9 @@ function App() {
             <br />
             Conveyor: {isConveyorMoving ? "ON" : "OFF"}
             <br />
-            Oven Heater: {ovenState ? "ON" : "OFF"}
+            Oven Heater: {oven.isHeaterOn ? "ON" : "OFF"}
             <br />
-            Oven Temperature: {ovenT}
+            Oven Temperature: {oven.temperature}
           </Typography>
         </Paper>
       </Grid>
@@ -90,11 +103,23 @@ function App() {
           <Typography variant="h5">biscuits</Typography>
 
           <Typography variant="body1">
-            {biscuits.map((b) => (
+            COUNT: {biscuits.length}
+            {/* {biscuits.map((b) => (
               <div key={b.id}>{JSON.stringify(b)}</div>
-            ))}
+            ))} */}
           </Typography>
         </Paper>
+      </Grid>
+
+      <Grid item xs={12}>
+        <LineChart width={500} height={300} data={data}>
+          <XAxis />
+          <YAxis type="number" domain={[0, 250]} />
+          <CartesianGrid stroke="#eee" />
+          <Line dataKey="temperature" stroke="red" dot={false} />
+          <Line dataKey="conveyor" stroke="blue" dot={false} />
+          <Line dataKey="jar" stroke="green" dot={false} />
+        </LineChart>
       </Grid>
     </Grid>
   );

@@ -3,7 +3,7 @@ import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const timeSlice = createSlice({
   name: "timeSpeed",
-  initialState: 1,
+  initialState: 0,
   reducers: {
     setSpeed: (state, action: PayloadAction<number>) => action.payload,
   },

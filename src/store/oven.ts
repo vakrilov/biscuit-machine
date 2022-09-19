@@ -5,8 +5,8 @@ import { bakeBiscuits, selectBiscuitsAtPosition } from "./biscuits";
 import { selectSwitch } from "./switch";
 
 export const ROOM_TEMP = 160;
-const LOW_TEMP = 220;
-const HIGH_TEMP = 240;
+export const LOW_TEMP = 220;
+export const HIGH_TEMP = 240;
 const HEAT_UP_STEP = 3;
 const HEAT_DOWN_STEP = 1;
 
@@ -19,7 +19,7 @@ type OvenState = {
   toPosition: number;
 };
 
-const initialState: OvenState = {
+export const initialState: OvenState = {
   temperature: ROOM_TEMP,
   isHeaterOn: false,
   fromPosition: 300,
@@ -54,21 +54,15 @@ export const ovenThermostatMiddleware: AppMiddleware =
       const state = storeApi.getState();
       const { isHeaterOn, temperature } = storeApi.getState().oven;
       const switchState = selectSwitch(state);
+
       if (switchState === "off") {
         if (isHeaterOn) {
-          console.log(`[Oven] Switched OFF. Turning heater OFF!`);
           storeApi.dispatch(ovenSlice.actions.turnOff());
         }
       } else {
         if (!isHeaterOn && temperature - HEAT_DOWN_STEP < LOW_TEMP) {
-          console.log(
-            `[Oven] Temperature is low: ${temperature}C. Turning heater ON!`
-          );
           storeApi.dispatch(ovenSlice.actions.turnOn());
         } else if (isHeaterOn && temperature + HEAT_UP_STEP > HIGH_TEMP) {
-          console.log(
-            `[Oven] Temperature is high: ${temperature}C. Turning heater OFF!`
-          );
           storeApi.dispatch(ovenSlice.actions.turnOff());
         }
       }

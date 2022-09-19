@@ -34,7 +34,6 @@ export const stamperMiddleware: AppMiddleware =
         position - radius,
         position + radius
       )(state);
-      console.log(`[Stamper] Stamp! Biscuits at range: ${toStamp.length}`);
       storeApi.dispatch(stampBiscuits(toStamp));
     }
 

@@ -13,7 +13,7 @@ import { stamperMiddleware, stamperSlice } from "./stamper";
 import { switchSlice } from "./switch";
 import { timeSlice, timeMiddleware } from "./time";
 
-const reducer = {
+export const reducer = {
   timeSpeed: timeSlice.reducer,
   switch: switchSlice.reducer,
   extruder: extruderSlice.reducer,

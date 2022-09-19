@@ -7,7 +7,7 @@ export const timeSlice = createSlice({
   name: "timeSpeed",
   initialState: 0,
   reducers: {
-    setSpeed: (state, action: PayloadAction<number>) => action.payload,
+    setSpeed: (_, action: PayloadAction<number>) => action.payload,
   },
 });
 
@@ -15,14 +15,13 @@ export const { setSpeed } = timeSlice.actions;
 export const timeAdvance = createAction("time/advance");
 
 export const timeMiddleware: AppMiddleware = (storeApi) => (next) => {
-  let timer: number | undefined = undefined;
+  let timer: ReturnType<typeof setInterval> | undefined = undefined;
   return (action) => {
     const result = next(action);
     if (action.type === timeSlice.actions.setSpeed.type) {
       clearInterval(timer);
       const speed = storeApi.getState().timeSpeed;
       if (speed > 0) {
-        console.log("Starting timer");
         timer = setInterval(() => {
           storeApi.dispatch(timeAdvance());
         }, TIME_INTERVAL / speed);

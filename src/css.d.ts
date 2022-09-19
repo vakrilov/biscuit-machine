@@ -5,5 +5,6 @@ declare module "csstype" {
   interface Properties {
     "--left"?: number;
     "--cooked"?: number;
+    "--color"?: string;
   }
 }

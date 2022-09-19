@@ -1,13 +1,14 @@
 .biscuit {
   --left: 0px;
-  --cooked: 0;
-  --transition: 100ms;
+  --transition: 0.1s;
+  --color: #e8ad59;
 
   border: 1px solid gray;
   border-radius: 4px;
   transition-property: left width height;
   transition-duration: var(--transition);
   transform: translateX(-50%);
+  background-color: var(--color);
 }
 
 .created,
@@ -15,7 +16,6 @@
   position: absolute;
   left: calc(var(--left) * 1px);
   bottom: 0;
-  background-color: yellow;
 }
 
 .created {

@@ -29,7 +29,12 @@ export const Analytics: React.FC = () => {
           <CartesianGrid stroke="#eee" />
           <Tooltip />
           <ReferenceArea y1={220} y2={240} />
-          <Line dataKey="temperature" stroke="red" dot={false} />
+          <Line
+            dataKey="temperature"
+            stroke="red"
+            dot={false}
+            isAnimationActive={false}
+          />
           <Legend />
         </LineChart>
       </ResponsiveContainer>
@@ -39,9 +44,24 @@ export const Analytics: React.FC = () => {
           <YAxis />
           <CartesianGrid stroke="#eee" />
           <Tooltip />
-          <Line dataKey="conveyor" stroke="blue" dot={false} />
-          <Line dataKey="jar" stroke="green" dot={false} />
-          <Line dataKey="overcooked" stroke="black" dot={false} />
+          <Line
+            dataKey="conveyor"
+            stroke="blue"
+            dot={false}
+            isAnimationActive={false}
+          />
+          <Line
+            dataKey="jar"
+            stroke="green"
+            dot={false}
+            isAnimationActive={false}
+          />
+          <Line
+            dataKey="overcooked"
+            stroke="black"
+            dot={false}
+            isAnimationActive={false}
+          />
           <Legend />
         </LineChart>
       </ResponsiveContainer>
@@ -51,7 +71,12 @@ export const Analytics: React.FC = () => {
           <YAxis />
           <CartesianGrid stroke="#eee" />
           <Tooltip />
-          <Line dataKey="pulse" type="monotone" dot={false} />
+          <Line
+            dataKey="pulse"
+            type="monotone"
+            dot={false}
+            isAnimationActive={false}
+          />
           <Legend />
         </LineChart>
       </ResponsiveContainer>

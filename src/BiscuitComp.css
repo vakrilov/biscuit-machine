@@ -1,0 +1,29 @@
+.biscuit {
+  --left: 0px;
+  --cooked: 0;
+  --transition: 100ms;
+
+  border: 1px solid gray;
+  border-radius: 4px;
+  transition-property: left width height;
+  transition-duration: var(--transition);
+  transform: translateX(-50%);
+}
+
+.created,
+.stamped {
+  position: absolute;
+  left: calc(var(--left) * 1px);
+  bottom: 0;
+  background-color: yellow;
+}
+
+.created {
+  width: 15px;
+  height: 15px;
+}
+
+.stamped {
+  width: 25px;
+  height: 10px;
+}

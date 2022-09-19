@@ -9,7 +9,6 @@ export const pulseAction = createAction("motor/pulse");
 export const selectIsMotorOn = (state: RootState) =>
   (state.switch === "on" && selectIsOvenReady(state)) ||
   (state.switch === "off" &&
-    selectIsOvenReady(state) &&
     state.biscuits.some((b) => b.location === "conveyor"));
 
 export const motorPulseMiddleware: AppMiddleware = (storeApi) => (next) => {

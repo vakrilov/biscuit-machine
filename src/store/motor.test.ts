@@ -1,3 +1,4 @@
+import { TurnedInNotOutlined } from "@mui/icons-material";
 import { configureStore } from "@reduxjs/toolkit";
 import { describe, expect, it, vi } from "vitest";
 import { createBiscuit } from "./biscuits";
@@ -38,43 +39,31 @@ describe("motorPulseMiddleware", () => {
 });
 describe("motorPulseMiddleware", () => {
   it.each([
-    { switch: "off", ovenReady: false, inProgBiscuits: false, expected: false },
-    { switch: "off", ovenReady: false, inProgBiscuits: true, expected: false },
-    { switch: "off", ovenReady: true, inProgBiscuits: false, expected: false },
-    { switch: "off", ovenReady: true, inProgBiscuits: true, expected: true },
+    { switch: "off", oven: false, inProgBiscuits: false, expected: false },
+    { switch: "off", oven: false, inProgBiscuits: true, expected: true },
+    { switch: "off", oven: true, inProgBiscuits: false, expected: false },
+    { switch: "off", oven: true, inProgBiscuits: true, expected: true },
 
-    { switch: "on", ovenReady: false, inProgBiscuits: false, expected: false },
-    { switch: "on", ovenReady: false, inProgBiscuits: true, expected: false },
-    { switch: "on", ovenReady: true, inProgBiscuits: false, expected: true },
-    { switch: "on", ovenReady: true, inProgBiscuits: true, expected: true },
+    { switch: "on", oven: false, inProgBiscuits: false, expected: false },
+    { switch: "on", oven: false, inProgBiscuits: true, expected: false },
+    { switch: "on", oven: true, inProgBiscuits: false, expected: true },
+    { switch: "on", oven: true, inProgBiscuits: true, expected: true },
 
-    {
-      switch: "pause",
-      ovenReady: false,
-      inProgBiscuits: false,
-      expected: false,
-    },
-    {
-      switch: "pause",
-      ovenReady: false,
-      inProgBiscuits: true,
-      expected: false,
-    },
-    {
-      switch: "pause",
-      ovenReady: true,
-      inProgBiscuits: false,
-      expected: false,
-    },
-    { switch: "pause", ovenReady: true, inProgBiscuits: true, expected: false },
-  ])("%j", ({ switch: switchState, ovenReady, inProgBiscuits, expected }) => {
-    const state: RootState = {
-      ...config().store.getState(),
-      switch: switchState as SwitchState,
-      oven: { ...initialOven, temperature: ovenReady ? 240 : 0 },
-      biscuits: inProgBiscuits ? [createBiscuit()] : [],
-    };
+    { switch: "pause", oven: false, inProgBiscuits: false, expected: false },
+    { switch: "pause", oven: false, inProgBiscuits: true, expected: false },
+    { switch: "pause", oven: true, inProgBiscuits: false, expected: false },
+    { switch: "pause", oven: true, inProgBiscuits: true, expected: false },
+  ])(
+    "%j",
+    ({ switch: switchState, oven: ovenReady, inProgBiscuits, expected }) => {
+      const state: RootState = {
+        ...config().store.getState(),
+        switch: switchState as SwitchState,
+        oven: { ...initialOven, temperature: ovenReady ? 240 : 0 },
+        biscuits: inProgBiscuits ? [createBiscuit()] : [],
+      };
 
-    expect(selectIsMotorOn(state)).toBe(expected);
-  });
+      expect(selectIsMotorOn(state)).toBe(expected);
+    }
+  );
 });

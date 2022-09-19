@@ -73,10 +73,9 @@ export const ovenThermostatMiddleware: AppMiddleware =
 
 export const ovenBakeMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
-    if (action.type === timeAdvance.type) {
-      const state = storeApi.getState();
+    const state = storeApi.getState();
+    if (action.type === timeAdvance.type && selectIsOvenReady(state)) {
       const { fromPosition, toPosition } = state.oven;
-
       const biscuits = selectBiscuitsAtPosition(
         fromPosition,
         toPosition

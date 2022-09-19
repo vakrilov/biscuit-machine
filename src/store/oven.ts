@@ -82,7 +82,6 @@ export const ovenBakeMiddleware: AppMiddleware =
         toPosition
       )(state);
 
-      console.log(`[Oven] Baking ${biscuits.length} biscuits`);
       storeApi.dispatch(bakeBiscuits({ biscuits, heat: BAKE_SPEED }));
     }
 

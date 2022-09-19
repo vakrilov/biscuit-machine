@@ -9,6 +9,7 @@ export const pulseAction = createAction("motor/pulse");
 export const selectIsMotorOn = (state: RootState) =>
   (state.switch === "on" && selectIsOvenReady(state)) ||
   (state.switch === "off" &&
+    selectIsOvenReady(state) &&
     state.biscuits.some((b) => b.location === "conveyor"));
 
 export const motorPulseMiddleware: AppMiddleware = (storeApi) => (next) => {
@@ -21,7 +22,6 @@ export const motorPulseMiddleware: AppMiddleware = (storeApi) => (next) => {
       timeSinceLastPulse++;
 
       if (timeSinceLastPulse >= PULSE_EVERY) {
-        console.log("[Motor] Pulse!");
         storeApi.dispatch(pulseAction());
         timeSinceLastPulse = 0;
       }

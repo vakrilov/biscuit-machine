@@ -40,7 +40,6 @@ export const conveyorMiddleware: AppMiddleware =
       const { moving, toMove } = selectIsConveyorMoving(storeApi.getState());
 
       if (moving) {
-        console.log(`[Conveyor] Move! Biscuits to move: ${toMove.length}`);
         storeApi.dispatch(moveBiscuits({ biscuits: toMove, speed: SPEED }));
       }
 

@@ -1,16 +1,13 @@
-import { configureStore, DeepPartial } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+import { describe, expect, it, vi } from "vitest";
 import {
-  describe,
-  expect,
-  it,
-  beforeEach,
-  afterEach,
-  vi,
-  assert,
-} from "vitest";
-import { HIGH_TEMP, initialState, LOW_TEMP, ovenThermostatMiddleware } from "./oven";
+  HIGH_TEMP,
+  initialState,
+  LOW_TEMP,
+  ovenThermostatMiddleware,
+} from "./oven";
 import { reducer, RootState } from "./store";
-import { setSpeed, timeAdvance, timeMiddleware } from "./time";
+import { timeAdvance } from "./time";
 
 const config = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({ reducer, preloadedState });
@@ -19,15 +16,7 @@ const config = (preloadedState?: Partial<RootState>) => {
     ovenThermostatMiddleware(store)(store.dispatch)(action);
   return { store, dispatchSpy, invoke };
 };
-describe("timeMiddleware", () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
+describe("ovenThermostatMiddleware", () => {
   it("does noting id not switched off", () => {
     const { store, invoke } = config({ switch: "off" });
 

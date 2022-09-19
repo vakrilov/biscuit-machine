@@ -71,3 +71,6 @@ export const {
 export const selectBiscuitsAtPosition =
   (from: number, to: number) => (state: RootState) =>
     state.biscuits.filter((b) => from <= b.position && b.position < to);
+
+export const selectAreBiscuitInProgress = (state: RootState) =>
+  state.biscuits.some((b) => b.location === "conveyor");

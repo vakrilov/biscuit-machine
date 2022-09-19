@@ -1,7 +1,11 @@
 import type { AppMiddleware, RootState } from "./store";
 import { createSlice } from "@reduxjs/toolkit";
 import { timeAdvance } from "./time";
-import { bakeBiscuits, selectBiscuitsAtPosition } from "./biscuits";
+import {
+  bakeBiscuits,
+  selectAreBiscuitInProgress,
+  selectBiscuitsAtPosition,
+} from "./biscuits";
 import { selectSwitch } from "./switch";
 
 export const ROOM_TEMP = 160;
@@ -55,7 +59,7 @@ export const ovenThermostatMiddleware: AppMiddleware =
       const { isHeaterOn, temperature } = storeApi.getState().oven;
       const switchState = selectSwitch(state);
 
-      if (switchState === "off") {
+      if (switchState === "off" && !selectAreBiscuitInProgress(state)) {
         if (isHeaterOn) {
           storeApi.dispatch(ovenSlice.actions.turnOff());
         }

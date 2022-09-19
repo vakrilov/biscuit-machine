@@ -2,14 +2,14 @@ import type { AppMiddleware, RootState } from "./store";
 import { createAction } from "@reduxjs/toolkit";
 import { timeAdvance } from "./time";
 import { selectIsOvenReady } from "./oven";
+import { selectAreBiscuitInProgress } from "./biscuits";
 
 const PULSE_EVERY = 10;
 
 export const pulseAction = createAction("motor/pulse");
 export const selectIsMotorOn = (state: RootState) =>
   (state.switch === "on" && selectIsOvenReady(state)) ||
-  (state.switch === "off" &&
-    state.biscuits.some((b) => b.location === "conveyor"));
+  (state.switch === "off" && selectAreBiscuitInProgress(state));
 
 export const motorPulseMiddleware: AppMiddleware = (storeApi) => (next) => {
   let timeSinceLastPulse = 0;

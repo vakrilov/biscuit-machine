@@ -1,3 +1,4 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppMiddleware, RootState } from "./store";
 import { timeAdvance } from "./time";
 import {
@@ -8,7 +9,6 @@ import {
 } from "./biscuits";
 import { selectSwitch } from "./switch";
 import { selectIsOvenReady } from "./oven";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const conveyorSlice = createSlice({
   name: "conveyor",

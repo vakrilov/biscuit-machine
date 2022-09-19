@@ -1,6 +1,7 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { useAppSelector } from "../store/hooks";
 import { selectStamperPosition, selectStamperPulse } from "../store/stamper";
+
 import { ReactComponent as StamperBodySvg } from "../assets/stamper-body.svg";
 import { ReactComponent as StamperPressSvg } from "../assets/stamper-press.svg";
 

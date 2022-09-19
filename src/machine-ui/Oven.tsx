@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useAppSelector } from "../store/hooks";
+
 import "./Oven.scss";
 
 export const Oven: FC = () => {

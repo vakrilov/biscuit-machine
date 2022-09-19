@@ -34,8 +34,6 @@ const getColor = (bake: number) => {
 };
 
 export const BiscuitComp: FC<{ biscuit: Biscuit }> = ({ biscuit }) => {
-
-
   return (
     <div
       className={`biscuit ${biscuit.state} location-${biscuit.location}`}

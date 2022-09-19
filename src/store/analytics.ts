@@ -1,5 +1,5 @@
-import type { AppMiddleware } from "./store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { AppMiddleware } from "./store";
 import { timeAdvance } from "./time";
 import { pulseAction } from "./motor";
 import { ROOM_TEMP } from "./oven";

@@ -1,7 +1,7 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppMiddleware, RootState } from "./store";
 import { pulseAction } from "./motor";
 import { stampBiscuits, selectBiscuitsAtPosition } from "./biscuits";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 let pulseCount = 0;
 export const stamperSlice = createSlice({

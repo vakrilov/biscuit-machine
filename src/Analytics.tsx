@@ -1,6 +1,6 @@
 import React from "react";
-import { useAppSelector } from "./store/hooks";
 import { Paper, Typography } from "@mui/material";
+import { useAppSelector } from "./store/hooks";
 import {
   LineChart,
   Line,
@@ -11,7 +11,6 @@ import {
   Legend,
   ReferenceArea,
   ResponsiveContainer,
-  Label,
 } from "recharts";
 import { DATA_POINTS_COUNT } from "./store/analytics";
 

@@ -1,5 +1,5 @@
-import type { AppMiddleware, RootState } from "./store";
 import { createAction } from "@reduxjs/toolkit";
+import type { AppMiddleware, RootState } from "./store";
 import { timeAdvance } from "./time";
 import { selectIsOvenReady } from "./oven";
 import { selectAreBiscuitInProgress } from "./biscuits";

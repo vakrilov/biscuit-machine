@@ -1,5 +1,5 @@
-import type { AppMiddleware, RootState } from "./store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { AppMiddleware, RootState } from "./store";
 import { timeAdvance } from "./time";
 import {
   bakeBiscuits,

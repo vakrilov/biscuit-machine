@@ -1,8 +1,8 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppMiddleware, RootState } from "./store";
 import { pulseAction } from "./motor";
 import { addBiscuit, createBiscuit } from "./biscuits";
 import { selectSwitch } from "./switch";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const MAX = 64;
 let pulseCount = 0;

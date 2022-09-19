@@ -1,4 +1,3 @@
-import { TurnedInNotOutlined } from "@mui/icons-material";
 import { configureStore } from "@reduxjs/toolkit";
 import { describe, expect, it, vi } from "vitest";
 import { createBiscuit } from "./biscuits";

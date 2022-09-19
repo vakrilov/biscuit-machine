@@ -1,6 +1,7 @@
 import { FC, useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { selectSwitch, SwitchState, setSwitch } from "../store/switch";
 
 import PlayIcon from "@mui/icons-material/PlayArrowRounded";

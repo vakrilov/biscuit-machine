@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { Typography, Grid } from "@mui/material";
 import { useAppDispatch } from "./store/hooks";
 import { setSpeed as setTimeSpeed } from "./store/time";
@@ -14,15 +14,6 @@ function App() {
     dispatch(setTimeSpeed(1));
   }, []);
 
-  const handleTime = useCallback(
-    (_: React.MouseEvent<HTMLElement>, value: number | null) => {
-      if (value !== null) {
-        dispatch(setTimeSpeed(value));
-      }
-    },
-    [setTimeSpeed]
-  );
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -37,7 +28,6 @@ function App() {
 
       <Grid item xs={4} textAlign="center" padding={2}>
         <AdvancedSettings />
-
         <Analytics />
       </Grid>
     </Grid>

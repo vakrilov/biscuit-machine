@@ -1,8 +1,7 @@
-import type { RootState } from "./store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "./store";
 
 export type SwitchState = "on" | "off" | "pause";
-
 export const switchSlice = createSlice({
   name: "switch",
   initialState: "off" as SwitchState,

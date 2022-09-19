@@ -9,16 +9,13 @@ export const Conveyor: FC = () => {
     s.biscuits.filter((b) => b.location === "conveyor")
   );
 
+  const { fromPosition: left, toPosition: right } = useAppSelector(
+    (s) => s.conveyor
+  );
+  
   return (
     <>
-      <div
-        className="belt"
-        style={{
-          left: 0,
-          width: 620,
-        }}
-      ></div>
-
+      <div className="belt" style={{ left, width: right - left }}></div>
       <div>
         {biscuitsOnBelt.map((b) => (
           <BiscuitComp key={b.id} biscuit={b} />

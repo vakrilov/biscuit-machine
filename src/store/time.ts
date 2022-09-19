@@ -1,5 +1,5 @@
-import type { AppMiddleware } from "./store";
 import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { AppMiddleware } from "./store";
 
 export const TIME_INTERVAL = 100;
 

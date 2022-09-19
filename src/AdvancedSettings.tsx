@@ -1,10 +1,9 @@
-import { FC, useCallback } from "react";
-import { Typography, Slider, Paper } from "@mui/material";
+import { FC } from "react";
+import { Typography, Slider, Paper, Stack } from "@mui/material";
+
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setSpeed as setTimeSpeed } from "./store/time";
 import { setSpeed as setConveyorSpeed } from "./store/conveyor";
-
-import { Stack } from "@mui/system";
 import { selectStamperPosition, setStamperPosition } from "./store/stamper";
 import { setOvenWidth } from "./store/oven";
 

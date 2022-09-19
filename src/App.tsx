@@ -54,11 +54,10 @@ function App() {
         </Typography>
       </Grid>
 
-      <Grid item xs={8}>
-
+      <Grid item xs={8} alignContent="center">
         <Machine />
-
       </Grid>
+
       <Grid item xs={4}>
         <Analytics />
       </Grid>

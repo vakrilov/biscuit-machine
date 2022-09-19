@@ -14,7 +14,7 @@ const TO = 620;
 const SPEED = 5;
 
 const selectBiscuitsToMove = selectBiscuitsAtPosition(FROM, TO);
-const selectBiscuitsToJar = selectBiscuitsAtPosition(TO, Infinity);
+const selectBiscuitsToPutInJar = selectBiscuitsAtPosition(TO, Infinity);
 
 export const selectIsConveyorMoving = (
   state: RootState
@@ -44,7 +44,7 @@ export const conveyorMiddleware: AppMiddleware =
         storeApi.dispatch(moveBiscuits({ biscuits: toMove, speed: SPEED }));
       }
 
-      const toJar = selectBiscuitsToJar(storeApi.getState());
+      const toJar = selectBiscuitsToPutInJar(storeApi.getState());
       if (toJar.length) {
         storeApi.dispatch(putBiscuitInJar(toJar));
       }

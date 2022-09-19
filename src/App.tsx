@@ -37,9 +37,7 @@ function App() {
 
       <Grid item xs={4} textAlign="center" padding={2}>
         <AdvancedSettings />
-      </Grid>
 
-      <Grid item xs={12}>
         <Analytics />
       </Grid>
     </Grid>

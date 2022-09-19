@@ -7,9 +7,8 @@ import {
   selectBiscuitsAtPosition,
 } from "./biscuits";
 import { selectSwitch } from "./switch";
-import { Payload } from "recharts/types/component/DefaultTooltipContent";
 
-export const ROOM_TEMP = 160;
+export const ROOM_TEMP = 100;
 export const LOW_TEMP = 220;
 export const HIGH_TEMP = 240;
 const HEAT_UP_STEP = 3;

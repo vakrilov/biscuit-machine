@@ -1,4 +1,4 @@
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setSpeed } from "./store/time";
 import { selectIsMotorOn } from "./store/motor";
@@ -24,6 +24,10 @@ import { Machine } from "./machine-ui/Machine";
 
 function App() {
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setSpeed(1));
+  }, []);
 
   const switchValue = useAppSelector(selectSwitch);
   const timeSpeed = useAppSelector((s) => s.timeSpeed);
@@ -58,22 +62,18 @@ function App() {
         <Machine />
       </Grid>
 
-      <Grid item xs={4}>
-        <Analytics />
-      </Grid>
-
-      <Grid item xs={8} textAlign="center">
+      <Grid item xs={4} textAlign="center">
         <Typography variant="h5">Switch</Typography>
         <ToggleButtonGroup
           value={switchValue}
           exclusive
           onChange={handleSwitch}
         >
-          <ToggleButton value="on">
-            <PlayIcon />
-          </ToggleButton>
           <ToggleButton value="off">
             <StopIcon />
+          </ToggleButton>
+          <ToggleButton value="on">
+            <PlayIcon />
           </ToggleButton>
           <ToggleButton value="pause">
             <PauseIcon />
@@ -95,6 +95,10 @@ function App() {
             <FWDIcon />
           </ToggleButton>
         </ToggleButtonGroup>
+      </Grid>
+
+      <Grid item xs={4}>
+        <Analytics />
       </Grid>
     </Grid>
   );

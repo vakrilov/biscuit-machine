@@ -3,14 +3,17 @@ import { pulseAction } from "./motor";
 import { stampBiscuits, selectBiscuitsAtPosition } from "./biscuits";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+let pulseCount = 0;
 type StamperState = {
   position: number;
   radius: number;
+  pulse: number;
 };
 
 const initialState: StamperState = {
   position: 150,
   radius: 5,
+  pulse: 0,
 };
 
 export const stamperSlice = createSlice({
@@ -20,10 +23,14 @@ export const stamperSlice = createSlice({
     setPosition: (state, action: PayloadAction<number>) => {
       state.position = action.payload;
     },
+    setPulse: (state, action: PayloadAction<number>) => {
+      state.pulse = action.payload;
+    },
   },
 });
 
 export const selectStamperPosition = (s: RootState) => s.stamper.position;
+export const selectStamperPulse = (s: RootState) => s.stamper.pulse;
 
 export const stamperMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
@@ -35,6 +42,7 @@ export const stamperMiddleware: AppMiddleware =
         position + radius
       )(state);
       storeApi.dispatch(stampBiscuits(toStamp));
+      storeApi.dispatch(stamperSlice.actions.setPulse(++pulseCount));
     }
 
     return next(action);

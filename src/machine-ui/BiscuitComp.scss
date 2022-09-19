@@ -14,7 +14,7 @@
     height: 25px;
     border-radius: 100% 100% 50% 50%;
 
-    animation-duration: 300ms;
+    animation-duration: calc(var(--timeChunk) * 3);
     animation-fill-mode: forwards;
     animation-name: spawn;
   }
@@ -42,4 +42,3 @@
     transform: translate(-50%, -100%) scale(1);
   }
 }
-

@@ -4,7 +4,7 @@ import { timeAdvance } from "./time";
 import { bakeBiscuits, selectBiscuitsAtPosition } from "./biscuits";
 import { selectSwitch } from "./switch";
 
-export const ROOM_TEMP = 200;
+export const ROOM_TEMP = 160;
 const LOW_TEMP = 220;
 const HIGH_TEMP = 240;
 const HEAT_UP_STEP = 3;

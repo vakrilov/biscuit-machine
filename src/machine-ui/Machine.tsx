@@ -22,12 +22,14 @@ export const Stamper: FC = () => {
 
 export const Oven: FC = () => {
   const oven = useAppSelector((s) => s.oven);
+  const heat = -20 + (oven.temperature - 180) / 4;
   return (
     <div
       className="oven"
       style={{
         left: oven.fromPosition,
         width: oven.toPosition - oven.fromPosition,
+        "--heat": `${heat}px`,
       }}
     >
       <div className="temperature"> {oven.temperature}</div>
@@ -45,11 +47,9 @@ export const Conveyor: FC = () => {
         left: 0,
         width: 620,
       }}
-    >
-    </div>
+    ></div>
   );
 };
-
 
 export const Machine: FC = () => {
   const biscuits = useAppSelector((s) => s.biscuits);

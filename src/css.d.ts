@@ -7,5 +7,6 @@ declare module "csstype" {
     "--cooked"?: number;
     "--color"?: string;
     "--timeChunk"?: string;
+    "--heat"?:string;
   }
 }

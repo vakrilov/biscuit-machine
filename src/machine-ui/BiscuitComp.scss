@@ -13,6 +13,10 @@
     width: 25px;
     height: 25px;
     border-radius: 100% 100% 50% 50%;
+
+    animation-duration: 300ms;
+    animation-fill-mode: forwards;
+    animation-name: spawn;
   }
 
   &.stamped {
@@ -27,8 +31,15 @@
     left: calc(var(--left) * 1px);
     top: var(--conveyorTop);
   }
+}
 
-  &.location-jar {
+@keyframes spawn {
+  from {
+    transform: translate(-50%, -300%) scale(0);
+  }
 
+  to {
+    transform: translate(-50%, -100%) scale(1);
   }
 }
+

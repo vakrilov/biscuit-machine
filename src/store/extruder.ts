@@ -5,19 +5,12 @@ import { selectSwitch } from "./switch";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 let pulseCount = 0;
-type ExtruderState = {
-  position: number;
-  pulse: number;
-};
-
-const initialState: ExtruderState = {
-  position: 50,
-  pulse: 0,
-};
-
 export const extruderSlice = createSlice({
   name: "extruder",
-  initialState,
+  initialState: {
+    position: 50,
+    pulse: 0,
+  },
   reducers: {
     setPosition: (state, action: PayloadAction<number>) => {
       state.position = action.payload;

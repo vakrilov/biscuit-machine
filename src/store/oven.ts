@@ -13,17 +13,9 @@ export const LOW_TEMP = 220;
 export const HIGH_TEMP = 240;
 const HEAT_UP_STEP = 3;
 const HEAT_DOWN_STEP = 1;
-
 const BAKE_SPEED = 2.5;
 
-type OvenState = {
-  temperature: number;
-  isHeaterOn: boolean;
-  fromPosition: number;
-  toPosition: number;
-};
-
-export const initialState: OvenState = {
+export const initialState = {
   temperature: ROOM_TEMP,
   isHeaterOn: false,
   fromPosition: 300,

@@ -1,7 +1,7 @@
 import { configureStore, Middleware } from "@reduxjs/toolkit";
 import { analyticsMiddleware, analyticsSlice } from "./analytics";
 import { biscuitsSlice } from "./biscuits";
-import { conveyorMiddleware } from "./conveyor";
+import { conveyorMiddleware, conveyorSlice } from "./conveyor";
 import { extruderMiddleware, extruderSlice } from "./extruder";
 import { motorPulseMiddleware } from "./motor";
 import {
@@ -15,6 +15,7 @@ import { timeSlice, timeMiddleware } from "./time";
 
 export const reducer = {
   timeSpeed: timeSlice.reducer,
+  conveyor: conveyorSlice.reducer,
   switch: switchSlice.reducer,
   extruder: extruderSlice.reducer,
   stamper: stamperSlice.reducer,

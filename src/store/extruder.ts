@@ -4,6 +4,7 @@ import { addBiscuit, createBiscuit } from "./biscuits";
 import { selectSwitch } from "./switch";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const MAX = 64;
 let pulseCount = 0;
 export const extruderSlice = createSlice({
   name: "extruder",
@@ -23,13 +24,18 @@ export const extruderSlice = createSlice({
 
 export const selectExtruderPosition = (s: RootState) => s.extruder.position;
 export const selectExtruderPulse = (s: RootState) => s.extruder.pulse;
+export const selectHasDough = (s: RootState) => s.biscuits.length < MAX;
 
 export const extruderMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
     const state = storeApi.getState();
     const switchState = selectSwitch(state);
     const position = selectExtruderPosition(state);
-    if (action.type === pulseAction.type && switchState === "on") {
+    if (
+      action.type === pulseAction.type &&
+      switchState === "on" &&
+      selectHasDough(state)
+    ) {
       const newBiscuit = createBiscuit(position);
       storeApi.dispatch(addBiscuit(newBiscuit));
       storeApi.dispatch(extruderSlice.actions.setPulse(++pulseCount));

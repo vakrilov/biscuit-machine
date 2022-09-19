@@ -1,17 +1,12 @@
-import { FC, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setSpeed } from "./store/time";
-import { selectIsMotorOn } from "./store/motor";
 import { selectSwitch, setSwitch, SwitchState } from "./store/switch";
-import { selectIsConveyorMoving } from "./store/conveyor";
 import {
   Typography,
   Grid,
-  Paper,
   ToggleButtonGroup,
   ToggleButton,
-  Box,
-  Container,
 } from "@mui/material";
 import { Analytics } from "./Analytics";
 

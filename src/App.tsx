@@ -25,12 +25,8 @@ import { Machine } from "./machine-ui/Machine";
 function App() {
   const dispatch = useAppDispatch();
 
-  const oven = useAppSelector((s) => s.oven);
-  const isMotorOn = useAppSelector(selectIsMotorOn);
   const switchValue = useAppSelector(selectSwitch);
   const timeSpeed = useAppSelector((s) => s.timeSpeed);
-
-  const { moving: isConveyorMoving } = useAppSelector(selectIsConveyorMoving);
 
   const handleSwitch = useCallback(
     (_: React.MouseEvent<HTMLElement>, value: SwitchState | null) => {
@@ -100,20 +96,6 @@ function App() {
             <FWDIcon />
           </ToggleButton>
         </ToggleButtonGroup>
-      </Grid>
-
-      <Grid item xs={4}>
-        <Paper elevation={3} style={{ padding: "1rem" }}>
-          <Typography variant="body1">
-            Motor: {isMotorOn ? "ON" : "OFF"}
-            <br />
-            Conveyor: {isConveyorMoving ? "ON" : "OFF"}
-            <br />
-            Oven Heater: {oven.isHeaterOn ? "ON" : "OFF"}
-            <br />
-            Oven Temperature: {oven.temperature}
-          </Typography>
-        </Paper>
       </Grid>
     </Grid>
   );

@@ -4,13 +4,13 @@ import { timeAdvance } from "./time";
 import { bakeBiscuits, selectBiscuitsAtPosition } from "./biscuits";
 import { selectSwitch } from "./switch";
 
-const ROOM_TEMP = 30;
+export const ROOM_TEMP = 200;
 const LOW_TEMP = 220;
 const HIGH_TEMP = 240;
-const HEAT_UP_STEP = 5;
+const HEAT_UP_STEP = 3;
 const HEAT_DOWN_STEP = 1;
 
-const BAKE_SPEED = 1;
+const BAKE_SPEED = 2.5;
 
 type OvenState = {
   temperature: number;
@@ -22,8 +22,8 @@ type OvenState = {
 const initialState: OvenState = {
   temperature: ROOM_TEMP,
   isHeaterOn: false,
-  fromPosition: 100,
-  toPosition: 200,
+  fromPosition: 300,
+  toPosition: 500,
 };
 
 export const ovenSlice = createSlice({

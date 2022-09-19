@@ -1,9 +1,8 @@
-import type { AppMiddleware, RootState } from "./store";
+import type { AppMiddleware } from "./store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { timeAdvance } from "./time";
-import { bakeBiscuits, selectBiscuitsAtPosition } from "./biscuits";
-import { selectSwitch } from "./switch";
 import { pulseAction } from "./motor";
+import { ROOM_TEMP } from "./oven";
 
 const OVERCOOKED_LIMIT = 120;
 type DataPoint = {
@@ -16,7 +15,7 @@ type DataPoint = {
 
 const LIMIT = 100;
 const initialState = new Array<DataPoint>(LIMIT).fill({
-  temperature: 30,
+  temperature: ROOM_TEMP,
   jar: 0,
   conveyor: 0,
   overcooked: 0,

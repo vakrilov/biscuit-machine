@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Biscuit } from "./store/biscuits";
+import { Biscuit } from "../store/biscuits";
 
 import "./BiscuitComp.css";
 const MAX = 220;
@@ -34,11 +34,13 @@ const getColor = (bake: number) => {
 };
 
 export const BiscuitComp: FC<{ biscuit: Biscuit }> = ({ biscuit }) => {
+
+
   return (
     <div
-      className={`biscuit ${biscuit.state} ${biscuit.location}`}
+      className={`biscuit ${biscuit.state}`}
       style={{
-        "--left": biscuit.position * 3,
+        "--left": biscuit.position,
         "--color": getColor(biscuit.cooked),
       }}
     ></div>

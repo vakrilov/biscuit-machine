@@ -1,0 +1,33 @@
+.biscuit {
+  --left: 0px;
+  --color: #e8ad59;
+
+  border: 1px solid gray;
+  border-radius: 4px;
+  
+  background-color: var(--color);
+
+  transition-property: left width height border-radius;
+  transition-duration: var(--timeChunk);
+  transition-timing-function: linear;
+  transform: translate(-50%, -100%);
+}
+
+.created,
+.stamped {
+  position: absolute;
+  left: calc(var(--left) * 1px);
+  top: var(--conveyorTop);
+}
+
+.created {
+  width: 25px;
+  height: 25px;
+  border-radius: 100% 100% 50% 50%;
+}
+
+.stamped {
+  width: 45px;
+  height: 15px;
+  border-radius: 100%;
+}

@@ -15,14 +15,12 @@ import {
 } from "@mui/material";
 import { Analytics } from "./Analytics";
 
-import "./App.css";
-import { BiscuitComp } from "./BiscuitComp";
-
 import PlayIcon from "@mui/icons-material/PlayArrowRounded";
 import StopIcon from "@mui/icons-material/StopRounded";
 import PauseIcon from "@mui/icons-material/PauseRounded";
 import FWDIcon from "@mui/icons-material/FastForwardRounded";
 import SlowMotionIcon from "@mui/icons-material/SlowMotionVideoRounded";
+import { Machine } from "./machine-ui/Machine";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -33,7 +31,6 @@ function App() {
   const timeSpeed = useAppSelector((s) => s.timeSpeed);
 
   const { moving: isConveyorMoving } = useAppSelector(selectIsConveyorMoving);
-  const biscuits = useAppSelector((s) => s.biscuits);
 
   const handleSwitch = useCallback(
     (_: React.MouseEvent<HTMLElement>, value: SwitchState | null) => {
@@ -61,12 +58,10 @@ function App() {
         </Typography>
       </Grid>
 
-      <Grid item xs={8} height={500}>
-        <div style={{ position: "relative" }}>
-          {biscuits.map((b) => (
-            <BiscuitComp key={b.id} biscuit={b} />
-          ))}
-        </div>
+      <Grid item xs={8}>
+
+        <Machine />
+
       </Grid>
       <Grid item xs={4}>
         <Analytics />
@@ -93,9 +88,9 @@ function App() {
         <Typography variant="h5">Time</Typography>
         <ToggleButtonGroup value={timeSpeed} exclusive onChange={handleTime}>
           <ToggleButton value={0}>
-            <StopIcon />
+            <PauseIcon />
           </ToggleButton>
-          <ToggleButton value={0.1}>
+          <ToggleButton value={0.33}>
             <SlowMotionIcon />
           </ToggleButton>
           <ToggleButton value={1}>

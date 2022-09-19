@@ -6,5 +6,6 @@ declare module "csstype" {
     "--left"?: number;
     "--cooked"?: number;
     "--color"?: string;
+    "--timeChunk"?: string;
   }
 }

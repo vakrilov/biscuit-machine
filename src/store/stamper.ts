@@ -1,18 +1,39 @@
-import { AppMiddleware } from "./store";
+import { AppMiddleware, RootState } from "./store";
 import { pulseAction } from "./motor";
 import { stampBiscuits, selectBiscuitsAtPosition } from "./biscuits";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const POSITION = 50;
-const RADIUS = 5;
+type StamperState = {
+  position: number;
+  radius: number;
+};
 
-const selectBiscuits = selectBiscuitsAtPosition(
-  POSITION - RADIUS,
-  POSITION + RADIUS
-);
+const initialState: StamperState = {
+  position: 150,
+  radius: 5,
+};
+
+export const stamperSlice = createSlice({
+  name: "stamper",
+  initialState,
+  reducers: {
+    setPosition: (state, action: PayloadAction<number>) => {
+      state.position = action.payload;
+    },
+  },
+});
+
+export const selectStamperPosition = (s: RootState) => s.stamper.position;
+
 export const stamperMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
     if (action.type === pulseAction.type) {
-      const toStamp = selectBiscuits(storeApi.getState());
+      const state = storeApi.getState();
+      const { position, radius } = state.stamper;
+      const toStamp = selectBiscuitsAtPosition(
+        position - radius,
+        position + radius
+      )(state);
       console.log(`[Stamper] Stamp! Biscuits at range: ${toStamp.length}`);
       storeApi.dispatch(stampBiscuits(toStamp));
     }

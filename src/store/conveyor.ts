@@ -10,8 +10,8 @@ import { selectSwitch, SwitchState } from "./switch";
 import { selectIsOvenReady } from "./oven";
 
 const FROM = 0;
-const TO = 220;
-const SPEED = 1;
+const TO = 620;
+const SPEED = 5;
 
 const selectBiscuitsToMove = selectBiscuitsAtPosition(FROM, TO);
 const selectBiscuitsToJar = selectBiscuitsAtPosition(TO, Infinity);

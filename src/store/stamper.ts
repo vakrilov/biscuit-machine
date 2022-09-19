@@ -8,7 +8,7 @@ export const stamperSlice = createSlice({
   name: "stamper",
   initialState: {
     position: 150,
-    radius: 5,
+    radius: 40,
     pulse: 0,
   },
   reducers: {
@@ -23,6 +23,7 @@ export const stamperSlice = createSlice({
 
 export const selectStamperPosition = (s: RootState) => s.stamper.position;
 export const selectStamperPulse = (s: RootState) => s.stamper.pulse;
+export const { setPosition: setStamperPosition } = stamperSlice.actions;
 
 export const stamperMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {

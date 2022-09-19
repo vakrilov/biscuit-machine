@@ -24,6 +24,8 @@ export const conveyorSlice = createSlice({
   },
 });
 
+export const { setSpeed } = conveyorSlice.actions;
+
 export const selectIsConveyorMoving = (
   state: RootState
 ): { moving: boolean; toMove: Biscuit[] } => {

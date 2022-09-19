@@ -1,5 +1,5 @@
 import type { AppMiddleware, RootState } from "./store";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { timeAdvance } from "./time";
 import {
   bakeBiscuits,
@@ -7,6 +7,7 @@ import {
   selectBiscuitsAtPosition,
 } from "./biscuits";
 import { selectSwitch } from "./switch";
+import { Payload } from "recharts/types/component/DefaultTooltipContent";
 
 export const ROOM_TEMP = 160;
 export const LOW_TEMP = 220;
@@ -18,8 +19,8 @@ const BAKE_SPEED = 2.5;
 export const initialState = {
   temperature: ROOM_TEMP,
   isHeaterOn: false,
-  fromPosition: 300,
-  toPosition: 500,
+  position: 300,
+  width: 200,
 };
 
 export const ovenSlice = createSlice({
@@ -32,6 +33,9 @@ export const ovenSlice = createSlice({
     turnOff: (state) => {
       state.isHeaterOn = false;
     },
+    setWidth: (state, action: PayloadAction<number>) => {
+      state.width = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(timeAdvance, (state) => {
@@ -40,6 +44,8 @@ export const ovenSlice = createSlice({
     });
   },
 });
+
+export const { setWidth: setOvenWidth } = ovenSlice.actions;
 
 export const selectIsOvenReady = (s: RootState) =>
   LOW_TEMP <= s.oven.temperature && s.oven.temperature <= HIGH_TEMP;
@@ -71,10 +77,10 @@ export const ovenBakeMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
     const state = storeApi.getState();
     if (action.type === timeAdvance.type && selectIsOvenReady(state)) {
-      const { fromPosition, toPosition } = state.oven;
+      const { position, width } = state.oven;
       const biscuits = selectBiscuitsAtPosition(
-        fromPosition,
-        toPosition
+        position,
+        position + width
       )(state);
 
       storeApi.dispatch(bakeBiscuits({ biscuits, heat: BAKE_SPEED }));

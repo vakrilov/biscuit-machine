@@ -9,8 +9,8 @@ export const Oven: FC = () => {
     <div
       className="oven"
       style={{
-        left: oven.fromPosition,
-        width: oven.toPosition - oven.fromPosition,
+        left: oven.position,
+        width: oven.width,
         "--heat": `${heat}px`,
       }}
     >

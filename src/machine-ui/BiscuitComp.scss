@@ -13,10 +13,6 @@
     width: 25px;
     height: 25px;
     border-radius: 100% 100% 50% 50%;
-
-    animation-duration: calc(var(--timeChunk) * 3);
-    animation-fill-mode: forwards;
-    animation-name: spawn;
   }
 
   &.stamped {
@@ -30,6 +26,12 @@
     transform: translate(-50%, -100%);
     left: calc(var(--left) * 1px);
     top: var(--conveyorTop);
+  }
+
+  &.location-conveyor.created {
+    animation-duration: calc(var(--timeChunk) * 3);
+    animation-fill-mode: forwards;
+    animation-name: spawn;
   }
 }
 

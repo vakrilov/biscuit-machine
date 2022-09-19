@@ -9,6 +9,7 @@ import { Extruder } from "./Extruder";
 import { Stamper } from "./Stamper";
 import { Conveyor } from "./Conveyor";
 import { Jar } from "./Jar";
+import { Switch } from "./Switch";
 
 export const Machine: FC = () => {
   const timeChunk = useAppSelector((s) =>
@@ -27,6 +28,7 @@ export const Machine: FC = () => {
       <Oven />
       <Conveyor />
       <Jar />
+      <Switch />
     </div>
   );
 };

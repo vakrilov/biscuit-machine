@@ -4,21 +4,24 @@ import { timeAdvance } from "./time";
 import { pulseAction } from "./motor";
 import { ROOM_TEMP } from "./oven";
 
+export const DATA_POINTS_COUNT = 100;
 const OVERCOOKED_LIMIT = 120;
+const UNDERCOOKED_LIMIT = 80;
 type DataPoint = {
   temperature: number;
-  conveyor: number;
-  jar: number;
+  onConveyor: number;
   overcooked: number;
+  undercooked: number;
+  justRight: number;
   pulse: number;
 };
 
-const LIMIT = 100;
-const initialState = new Array<DataPoint>(LIMIT).fill({
+const initialState = new Array<DataPoint>(DATA_POINTS_COUNT).fill({
   temperature: ROOM_TEMP,
-  jar: 0,
-  conveyor: 0,
+  onConveyor: 0,
   overcooked: 0,
+  undercooked: 0,
+  justRight: 0,
   pulse: 0,
 });
 
@@ -28,7 +31,7 @@ export const analyticsSlice = createSlice({
   reducers: {
     add: (state, action: PayloadAction<DataPoint>) => {
       state.push(action.payload);
-      if (state.length > LIMIT) {
+      if (state.length > DATA_POINTS_COUNT) {
         state.shift();
       }
     },
@@ -45,20 +48,31 @@ export const analyticsMiddleware: AppMiddleware =
     if (action.type === timeAdvance.type) {
       const state = storeApi.getState();
       const { temperature } = state.oven;
-      let conveyor = 0;
-      let jar = 0;
+      let onConveyor = 0;
       let overcooked = 0;
+      let undercooked = 0;
+      let justRight = 0;
       state.biscuits.forEach((b) => {
-        b.location === "conveyor" ? conveyor++ : jar++;
-        overcooked += b.cooked > OVERCOOKED_LIMIT ? 1 : 0;
+        if (b.location === "conveyor") {
+          onConveyor++;
+        } else {
+          if (b.cooked < UNDERCOOKED_LIMIT) {
+            undercooked++;
+          } else if (b.cooked > OVERCOOKED_LIMIT) {
+            overcooked++;
+          } else {
+            justRight++;
+          }
+        }
       });
 
       storeApi.dispatch(
         analyticsSlice.actions.add({
           temperature,
-          conveyor,
+          onConveyor,
           overcooked,
-          jar,
+          undercooked,
+          justRight,
           pulse: 0,
         })
       );

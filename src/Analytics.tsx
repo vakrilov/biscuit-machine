@@ -11,49 +11,37 @@ import {
   Legend,
   ReferenceArea,
   ResponsiveContainer,
+  Label,
 } from "recharts";
+import { DATA_POINTS_COUNT } from "./store/analytics";
 
+const CHART_HEIGHT = 180;
+const timeFormatter = (value: number) => {
+  const val = (DATA_POINTS_COUNT - value) / 10;
+  return `${val}s`;
+};
 export const Analytics: React.FC = () => {
   const data = useAppSelector((s) => s.analytics);
   return (
     <Paper elevation={3} style={{ padding: "1rem" }}>
       <Typography variant="h4">Analytics</Typography>
 
-      <ResponsiveContainer width="100%" height={200}>
-        <LineChart
-          width={500}
-          height={300}
-          data={data}
-          syncId="time"
-          title="Temperature"
-        >
-          <YAxis type="number" domain={[100, 240]} />
-          <CartesianGrid stroke="#eee" />
-          <Tooltip />
-          <ReferenceArea y1={220} y2={240} />
-          <Line
-            dataKey="temperature"
-            stroke="red"
-            dot={false}
-            isAnimationActive={false}
-          />
-          <Legend />
-        </LineChart>
-      </ResponsiveContainer>
-      <ResponsiveContainer width="100%" height={200}>
-        <LineChart width={500} height={300} data={data} syncId="time">
-          <XAxis />
+      <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
+        <LineChart data={data} syncId="time">
+          <XAxis tickFormatter={timeFormatter} interval={9}></XAxis>
           <YAxis />
           <CartesianGrid stroke="#eee" />
           <Tooltip />
           <Line
-            dataKey="conveyor"
+            name="preparing"
+            dataKey="onConveyor"
             stroke="blue"
             dot={false}
             isAnimationActive={false}
           />
           <Line
-            dataKey="jar"
+            name="just right"
+            dataKey="justRight"
             stroke="green"
             dot={false}
             isAnimationActive={false}
@@ -64,12 +52,37 @@ export const Analytics: React.FC = () => {
             dot={false}
             isAnimationActive={false}
           />
+          <Line
+            dataKey="undercooked"
+            stroke="orange"
+            dot={false}
+            isAnimationActive={false}
+          />
           <Legend />
         </LineChart>
       </ResponsiveContainer>
-      <ResponsiveContainer width="100%" height={200}>
-        <LineChart width={500} height={300} data={data} syncId="time">
-          <XAxis />
+
+      <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
+        <LineChart data={data} syncId="time" title="Temperature">
+          <XAxis tickFormatter={timeFormatter} interval={9} />
+          <YAxis type="number" domain={[100, 240]} />
+          <CartesianGrid stroke="#eee" />
+          <Tooltip />
+          <ReferenceArea y1={220} y2={240} />
+          <Line
+            name="oven temperature"
+            dataKey="temperature"
+            stroke="red"
+            dot={false}
+            isAnimationActive={false}
+          />
+          <Legend />
+        </LineChart>
+      </ResponsiveContainer>
+
+      <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
+        <LineChart data={data} syncId="time">
+          <XAxis tickFormatter={timeFormatter} interval={9} />
           <YAxis />
           <CartesianGrid stroke="#eee" />
           <Tooltip />

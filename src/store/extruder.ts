@@ -26,16 +26,19 @@ export const selectExtruderPosition = (s: RootState) => s.extruder.position;
 export const selectExtruderPulse = (s: RootState) => s.extruder.pulse;
 export const selectHasDough = (s: RootState) => s.biscuits.length < MAX;
 
+/**
+ * Extruder should trigger on every motor pulse if the switch is "on" and it has enough dough
+ */
 export const extruderMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
     const state = storeApi.getState();
     const switchState = selectSwitch(state);
-    const position = selectExtruderPosition(state);
     if (
       action.type === pulseAction.type &&
       switchState === "on" &&
       selectHasDough(state)
     ) {
+      const position = selectExtruderPosition(state);
       const newBiscuit = createBiscuit(position);
       storeApi.dispatch(addBiscuit(newBiscuit));
       storeApi.dispatch(extruderSlice.actions.setPulse(++pulseCount));

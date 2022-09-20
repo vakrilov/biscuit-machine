@@ -14,6 +14,9 @@ export const timeSlice = createSlice({
 export const { setSpeed } = timeSlice.actions;
 export const timeAdvance = createAction("time/advance");
 
+/**
+ * Releases a `time/advance` action every TIME_INTERVAL / speed
+ */
 export const timeMiddleware: AppMiddleware = (storeApi) => (next) => {
   let timer: ReturnType<typeof setInterval> | undefined = undefined;
   return (action) => {

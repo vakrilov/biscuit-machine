@@ -41,6 +41,9 @@ export const analyticsSlice = createSlice({
   },
 });
 
+/**
+ * Gathers analytics data (oven temperature, cooked biscuits etc.) on every time tick
+ */
 export const analyticsMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
     const result = next(action);

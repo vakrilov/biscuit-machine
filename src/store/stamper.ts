@@ -25,6 +25,9 @@ export const selectStamperPosition = (s: RootState) => s.stamper.position;
 export const selectStamperPulse = (s: RootState) => s.stamper.pulse;
 export const { setPosition: setStamperPosition } = stamperSlice.actions;
 
+/**
+ * Stamper should trigger on every motor pulse
+ */
 export const stamperMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
     if (action.type === pulseAction.type) {

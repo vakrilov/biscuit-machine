@@ -1,14 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppMiddleware, RootState } from "./store";
+import { AppMiddleware } from "./store";
 import { timeAdvance } from "./time";
 import {
-  Biscuit,
   moveBiscuits,
   selectBiscuitsAtPosition,
   putBiscuitInJar,
 } from "./biscuits";
-import { selectSwitch } from "./switch";
-import { selectIsOvenReady } from "./oven";
+import { selectIsMotorOn } from "./motor";
 
 export const conveyorSlice = createSlice({
   name: "conveyor",
@@ -26,36 +24,22 @@ export const conveyorSlice = createSlice({
 
 export const { setSpeed } = conveyorSlice.actions;
 
-export const selectIsConveyorMoving = (
-  state: RootState
-): { moving: boolean; toMove: Biscuit[] } => {
-  const switchState = selectSwitch(state);
-  const toMove = selectBiscuitsAtPosition(
-    state.conveyor.fromPosition,
-    state.conveyor.toPosition
-  )(state);
-
-  switch (switchState) {
-    case "off":
-      return { moving: toMove.length > 0, toMove };
-    case "on":
-      return selectIsOvenReady(state)
-        ? { moving: true, toMove }
-        : { moving: false, toMove: [] };
-    case "pause":
-      return { moving: false, toMove: [] };
-  }
-};
-
+/**
+ * Moves the biscuits on the conveyor or puts them in the jar
+ */
 export const conveyorMiddleware: AppMiddleware =
   (storeApi) => (next) => (action) => {
     if (action.type === timeAdvance.type) {
       const state = storeApi.getState();
 
-      const { moving, toMove } = selectIsConveyorMoving(state);
-      if (moving) {
+      const shouldMove = selectIsMotorOn(state);
+      if (shouldMove) {
+        const biscuits = selectBiscuitsAtPosition(
+          state.conveyor.fromPosition,
+          state.conveyor.toPosition
+        )(state);
         storeApi.dispatch(
-          moveBiscuits({ biscuits: toMove, speed: state.conveyor.speed })
+          moveBiscuits({ biscuits, speed: state.conveyor.speed })
         );
       }
 

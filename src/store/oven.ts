@@ -8,7 +8,7 @@ import {
 } from "./biscuits";
 import { selectSwitch } from "./switch";
 
-export const ROOM_TEMP = 100;
+export const ROOM_TEMP = 160;
 export const LOW_TEMP = 220;
 export const HIGH_TEMP = 240;
 const HEAT_UP_STEP = 3;

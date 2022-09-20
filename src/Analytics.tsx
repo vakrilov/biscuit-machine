@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { DATA_POINTS_COUNT } from "./store/analytics";
+import { HIGH_TEMP, LOW_TEMP, ROOM_TEMP } from "./store/oven";
 
 const CHART_HEIGHT = 180;
 const timeFormatter = (value: number) => {
@@ -64,10 +65,10 @@ export const Analytics: React.FC = () => {
       <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
         <LineChart data={data} syncId="time" title="Temperature">
           <XAxis tickFormatter={timeFormatter} interval={9} />
-          <YAxis type="number" domain={[100, 240]} />
+          <YAxis type="number" domain={[ROOM_TEMP, HIGH_TEMP]} />
           <CartesianGrid stroke="#eee" />
           <Tooltip />
-          <ReferenceArea y1={220} y2={240} />
+          <ReferenceArea y1={LOW_TEMP} y2={HIGH_TEMP} />
           <Line
             name="oven temperature"
             dataKey="temperature"

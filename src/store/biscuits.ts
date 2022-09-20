@@ -20,10 +20,11 @@ export const createBiscuit = (position: number = 0): Biscuit => ({
   position,
 });
 
-const selectBiscuits = (toSelect: Biscuit[], state: Biscuit[]) => {
+const biscuitsToChange = (toSelect: Biscuit[], state: Biscuit[]) => {
   const idsToFilter = toSelect.map((b) => b.id);
   return state.filter((b) => idsToFilter.includes(b.id));
 };
+
 export const biscuitsSlice = createSlice({
   name: "biscuits",
   initialState,
@@ -33,7 +34,7 @@ export const biscuitsSlice = createSlice({
     },
 
     stampBiscuits: (state, action: PayloadAction<Biscuit[]>) => {
-      const toStamp = selectBiscuits(action.payload, state);
+      const toStamp = biscuitsToChange(action.payload, state);
       toStamp.forEach((b) => (b.state = "stamped"));
     },
 
@@ -41,7 +42,7 @@ export const biscuitsSlice = createSlice({
       state,
       action: PayloadAction<{ biscuits: Biscuit[]; speed: number }>
     ) => {
-      const toMove = selectBiscuits(action.payload.biscuits, state);
+      const toMove = biscuitsToChange(action.payload.biscuits, state);
       toMove.forEach((b) => (b.position += action.payload.speed));
     },
 
@@ -49,12 +50,12 @@ export const biscuitsSlice = createSlice({
       state,
       action: PayloadAction<{ biscuits: Biscuit[]; heat: number }>
     ) => {
-      const toBake = selectBiscuits(action.payload.biscuits, state);
+      const toBake = biscuitsToChange(action.payload.biscuits, state);
       toBake.forEach((b) => (b.cooked += action.payload.heat));
     },
 
     putBiscuitInJar: (state, action: PayloadAction<Biscuit[]>) => {
-      const toJar = selectBiscuits(action.payload, state);
+      const toJar = biscuitsToChange(action.payload, state);
       toJar.forEach((b) => (b.location = "jar"));
     },
   },

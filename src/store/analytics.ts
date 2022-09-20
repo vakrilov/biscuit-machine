@@ -2,11 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AppMiddleware } from "./store";
 import { timeAdvance } from "./time";
 import { pulseAction } from "./motor";
-import { ROOM_TEMP } from "./oven";
+import { OVERCOOKED_LIMIT, ROOM_TEMP, UNDERCOOKED_LIMIT } from "./oven";
 
 export const DATA_POINTS_COUNT = 100;
-const OVERCOOKED_LIMIT = 120;
-const UNDERCOOKED_LIMIT = 80;
+
 type DataPoint = {
   temperature: number;
   onConveyor: number;

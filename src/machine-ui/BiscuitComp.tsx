@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Tooltip } from "@mui/material";
 import { Biscuit } from "../store/biscuits";
 
 import "./BiscuitComp.scss";
@@ -35,12 +36,18 @@ const getColor = (bake: number) => {
 
 export const BiscuitComp: FC<{ biscuit: Biscuit }> = ({ biscuit }) => {
   return (
-    <div
-      className={`biscuit ${biscuit.state} location-${biscuit.location}`}
-      style={{
-        "--left": biscuit.position,
-        "--color": getColor(biscuit.cooked),
-      }}
-    ></div>
+    <Tooltip
+      title={`Cooked: ${Math.round(biscuit.cooked)}%`}
+      placement="top"
+      arrow
+    >
+      <div
+        className={`biscuit ${biscuit.state} location-${biscuit.location}`}
+        style={{
+          "--left": biscuit.position,
+          "--color": getColor(biscuit.cooked),
+        }}
+      ></div>
+    </Tooltip>
   );
 };

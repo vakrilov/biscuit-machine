@@ -11,6 +11,8 @@ import { selectSwitch } from "./switch";
 export const ROOM_TEMP = 160;
 export const LOW_TEMP = 220;
 export const HIGH_TEMP = 240;
+export const OVERCOOKED_LIMIT = 120;
+export const UNDERCOOKED_LIMIT = 80;
 const HEAT_UP_STEP = 3;
 const HEAT_DOWN_STEP = 1;
 const BAKE_SPEED = 2.5;
